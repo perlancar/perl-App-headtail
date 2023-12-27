@@ -1,0 +1,5 @@
+App-headtail-*
+.build
+*~
+nytprof*
+.DS_Store

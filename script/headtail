@@ -1,0 +1,81 @@
+#!perl
+
+use strict;
+use warnings;
+
+use App::headtail;
+use Getopt::Long;
+
+# AUTHORITY
+# DATE
+# DIST
+# VERSION
+
+my %Opts = (
+    lines         => 1,
+    bytes         => undef,
+);
+
+sub parse_cmdline {
+    Getopt::Long::Configure("gnu_getopt", "no_ignore_case");
+    my $res = GetOptions(
+        'lines|n=i'       => sub { $Opts{lines} = $_[1]; undef $Opts{bytes} },
+        'bytes|c=i'       => sub { die "--bytes (-c) is not yet implemented\n" },
+        'help|h'           => sub {
+            print <<USAGE;
+Usage:
+  headtail [OPTIONS]... [FILE] ...
+  headtail --help
+Options:
+  --lines, -n
+For more details, see the manpage/documentation.
+USAGE
+            exit 0;
+        },
+    );
+    exit 99 if !$res;
+}
+
+# MAIN
+
+parse_cmdline();
+App::headtail::run(%Opts);
+
+1;
+# ABSTRACT: head+tail
+# PODNAME:
+
+=head1 SYNOPSIS
+
+ headtail [OPTION]... [FILE] ...
+
+
+=head1 DESCRIPTION
+
+
+=head1 OPTIONS
+
+=over
+
+=item * --lines, -n
+
+=back
+
+
+=head1 EXIT CODES
+
+0 on success.
+
+255 on I/O error.
+
+99 on command-line options error.
+
+
+=head1 FAQ
+
+
+=head1 SEE ALSO
+
+B<head>, B<tail>
+
+=cut
